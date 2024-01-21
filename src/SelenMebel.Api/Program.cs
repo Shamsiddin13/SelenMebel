@@ -1,4 +1,11 @@
 
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using SelenMebel.Data.DbContexts;
+using SelenMebel.Service.Helpers;
+using SelenMebel.Service.Mappers;
+using Serilog;
+
 namespace SelenMebel.Api
 {
     public class Program
@@ -7,6 +14,20 @@ namespace SelenMebel.Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddDbContext<SelenMebelDbContext>(options =>
+            {
+                options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
+
+            // Fix the Cycle
+            //builder.Services.AddControllers()
+            //     .AddNewtonsoftJson(options =>
+            //     {
+            //         options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            //     });
+
+
+
             // Add services to the container.
 
             builder.Services.AddControllers();
@@ -14,7 +35,30 @@ namespace SelenMebel.Api
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+
+            // Serialog
+            var logger = new LoggerConfiguration()
+               .ReadFrom.Configuration(builder.Configuration)
+               .Enrich.FromLogContext()
+               .CreateLogger();
+            builder.Logging.ClearProviders();
+            builder.Logging.AddSerilog(logger);
+
+            builder.Services.AddHttpContextAccessor();
+
+            builder.Services.AddAutoMapper(typeof(MapperProfile));
+
+
+
             var app = builder.Build();
+
+            WebHostEnviromentHelper.WebRootPath = Path.GetFullPath("wwwroot");
+
+            if (app.Services.GetService<IHttpContextAccessor>() != null)
+                HttpContextHelper.Accessor = app.Services.GetRequiredService<IHttpContextAccessor>();
+
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
