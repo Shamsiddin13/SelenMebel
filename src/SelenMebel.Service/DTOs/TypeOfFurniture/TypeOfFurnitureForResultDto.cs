@@ -7,5 +7,6 @@ public class TypeOfFurnitureForResultDto
 {
     public long Id { get; set; }
     public string Name { get; set; }
+    public string Image { get; set; }
     public FurnitureForResultDto Furniture { get; set; }
 }

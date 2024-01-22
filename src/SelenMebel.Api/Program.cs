@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using SelenMebel.Api.Extensions;
 using SelenMebel.Data.DbContexts;
 using SelenMebel.Service.Helpers;
 using SelenMebel.Service.Mappers;
@@ -31,6 +32,7 @@ namespace SelenMebel.Api
             // Add services to the container.
 
             builder.Services.AddControllers();
+            builder.Services.AddCustomService();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

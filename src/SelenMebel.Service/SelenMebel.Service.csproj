@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SelenMebel.Data\SelenMebel.Data.csproj" />
     <ProjectReference Include="..\SelenMebel.Domain\SelenMebel.Domain.csproj" />
   </ItemGroup>
 

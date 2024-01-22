@@ -1,4 +1,5 @@
-﻿using SelenMebel.Service.DTOs.FurnitureFeature;
+﻿using SelenMebel.Service.DTOs.Categories;
+using SelenMebel.Service.DTOs.FurnitureFeature;
 
 namespace SelenMebel.Service.DTOs.Furnitures;
 

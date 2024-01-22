@@ -11,5 +11,6 @@ public interface IFurnitureService
     Task<FurnitureForResultDto> RetrieveByUniqueIdAsync(long uniqueId);
     Task<FurnitureForResultDto> CreateAsync(FurnitureForCreationDto dto);
     Task<FurnitureForResultDto> ModifyAsync(long id, FurnitureForUpdateDto dto);
+    string GenerateOtpDigits();
     Task<IEnumerable<FurnitureForResultDto>> RetrieveAllAsync(PaginationParams @params);
 }
