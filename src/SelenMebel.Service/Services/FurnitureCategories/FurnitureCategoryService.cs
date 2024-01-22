@@ -101,8 +101,9 @@ public class FurnitureCategoryService : IFurnitureCategoryService
     {
         var furnitureCategory = _repository.SelectAll()
             .Include(c => c.Category)
-            .Include(f => f.Furniture)
-            .AsNoTracking()
+            .ThenInclude(tof => tof.TypeOfFurniture)
+            .ThenInclude(f => f.Furniture)
+            .ThenInclude(ff => ff.FurnitureFeature)
             .ToPagedList(@params);
 
         return this._mapper.Map<IEnumerable<FurnitureCategoryForResultDto>>(furnitureCategory);
@@ -114,7 +115,9 @@ public class FurnitureCategoryService : IFurnitureCategoryService
             .SelectAll()
             .Where(fc => fc.Id == id)
             .Include(c => c.Category)
-            .Include(f => f.Furniture)
+            .ThenInclude(c => c.TypeOfFurniture)
+            .ThenInclude(f => f.Furniture)
+            .ThenInclude(ff => ff.FurnitureFeature)
             .AsNoTracking()
             .FirstOrDefaultAsync();
 

@@ -15,6 +15,13 @@ public class TypeOfFurnitureService : ITypeOfFurnitureService
 {
     private readonly IMapper _mapper;
     private readonly IRepository<TypeOfFurniture> _repository;
+
+    public TypeOfFurnitureService(IRepository<TypeOfFurniture> repository, IMapper mapper)
+    {
+        _repository = repository;
+        _mapper = mapper;
+    }
+
     public async Task<TypeOfFurnitureForResultDto> CreateAsync(TypeOfFurnitureForCreationDto dto)
     {
         var addTypeOfFurniture = await _repository.SelectAll()
@@ -81,6 +88,7 @@ public class TypeOfFurnitureService : ITypeOfFurnitureService
     {
         var typeOfFurnitures = await _repository.SelectAll()
                   .Include(tof => tof.Furniture)
+                  .ThenInclude(ff => ff.FurnitureFeature)
                   .AsNoTracking()
                   .ToPagedList(@params)
                   .ToListAsync();
@@ -93,6 +101,7 @@ public class TypeOfFurnitureService : ITypeOfFurnitureService
         var byIdTypeOfFurniture = await _repository.SelectAll()
                 .Where(u => u.Id == id)
                 .Include(tof => tof.Furniture)
+                .ThenInclude(ff => ff.FurnitureFeature)
                 .AsNoTracking()
                 .FirstOrDefaultAsync() ??
                     throw new SelenMebelException(404, "TypeOfFurniture is not found! ");

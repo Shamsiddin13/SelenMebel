@@ -90,6 +90,8 @@ public class CategoryService : ICategoryService
     {
         var category = await _repository.SelectAll()
                 .Include(c => c.TypeOfFurniture)
+                .ThenInclude(f => f.Furniture)
+                .ThenInclude(ff => ff.FurnitureFeature)
                 .AsNoTracking()
                 .ToPagedList(@params)
                 .ToListAsync();
@@ -102,6 +104,8 @@ public class CategoryService : ICategoryService
         var category = await this._repository.SelectAll()
                 .Where(c => c.Id == id)
                 .Include(dc => dc.TypeOfFurniture)
+                .ThenInclude(f => f.Furniture)
+                .ThenInclude(ff => ff.FurnitureFeature)
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
 

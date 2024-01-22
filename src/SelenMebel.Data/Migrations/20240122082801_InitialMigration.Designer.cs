@@ -12,8 +12,8 @@ using SelenMebel.Data.DbContexts;
 namespace SelenMebel.Data.Migrations
 {
     [DbContext(typeof(SelenMebelDbContext))]
-    [Migration("20240121092702_UpdateMigration")]
-    partial class UpdateMigration
+    [Migration("20240122082801_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,37 +27,44 @@ namespace SelenMebel.Data.Migrations
 
             modelBuilder.Entity("SelenMebel.Domain.Entities.Category", b =>
                 {
-                    b.Property<long>("TypeOfFurnitureId")
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
+                    b.Property<string>("Image")
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<long>("TypeOfFurnitureId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.HasKey("TypeOfFurnitureId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("TypeOfFurnitureId");
 
                     b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("SelenMebel.Domain.Entities.Furniture", b =>
                 {
-                    b.Property<long>("UniqueId")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("UniqueId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -65,31 +72,66 @@ namespace SelenMebel.Data.Migrations
                     b.Property<long>("FurnitureFeatureId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Image")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("numeric");
+
+                    b.Property<long>("UniqueId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.HasKey("UniqueId");
+                    b.HasKey("Id");
 
                     b.HasIndex("FurnitureFeatureId");
 
                     b.ToTable("Furnitures");
+                });
+
+            modelBuilder.Entity("SelenMebel.Domain.Entities.FurnitureCategory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("CategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<long?>("FurnitureCategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("FurnitureId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("FurnitureCategoryId");
+
+                    b.HasIndex("FurnitureId");
+
+                    b.ToTable("FurnitureCategories");
                 });
 
             modelBuilder.Entity("SelenMebel.Domain.Entities.FurnitureFeature", b =>
@@ -102,6 +144,9 @@ namespace SelenMebel.Data.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<long?>("FurnitureFeatureId")
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
@@ -117,31 +162,40 @@ namespace SelenMebel.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FurnitureFeatureId");
+
                     b.ToTable("FurnitureFeatures");
                 });
 
             modelBuilder.Entity("SelenMebel.Domain.Entities.TypeOfFurniture", b =>
                 {
-                    b.Property<long>("FurnitureId")
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long>("Id")
+                    b.Property<long>("FurnitureId")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.HasKey("FurnitureId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("FurnitureId");
 
                     b.ToTable("TypeOfFurnitures");
                 });
@@ -151,7 +205,7 @@ namespace SelenMebel.Data.Migrations
                     b.HasOne("SelenMebel.Domain.Entities.TypeOfFurniture", "TypeOfFurniture")
                         .WithMany()
                         .HasForeignKey("TypeOfFurnitureId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("TypeOfFurniture");
@@ -162,29 +216,61 @@ namespace SelenMebel.Data.Migrations
                     b.HasOne("SelenMebel.Domain.Entities.FurnitureFeature", "FurnitureFeature")
                         .WithMany()
                         .HasForeignKey("FurnitureFeatureId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("FurnitureFeature");
+                });
+
+            modelBuilder.Entity("SelenMebel.Domain.Entities.FurnitureCategory", b =>
+                {
+                    b.HasOne("SelenMebel.Domain.Entities.Category", "Category")
+                        .WithMany("Furnitures")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SelenMebel.Domain.Entities.FurnitureCategory", null)
+                        .WithMany("Categories")
+                        .HasForeignKey("FurnitureCategoryId");
+
+                    b.HasOne("SelenMebel.Domain.Entities.Furniture", "Furniture")
+                        .WithMany()
+                        .HasForeignKey("FurnitureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Furniture");
                 });
 
             modelBuilder.Entity("SelenMebel.Domain.Entities.FurnitureFeature", b =>
                 {
                     b.HasOne("SelenMebel.Domain.Entities.FurnitureFeature", null)
                         .WithMany("FurnitureFeatures")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("FurnitureFeatureId");
                 });
 
             modelBuilder.Entity("SelenMebel.Domain.Entities.TypeOfFurniture", b =>
                 {
                     b.HasOne("SelenMebel.Domain.Entities.Furniture", "Furniture")
-                        .WithOne()
-                        .HasForeignKey("SelenMebel.Domain.Entities.TypeOfFurniture", "FurnitureId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .WithMany()
+                        .HasForeignKey("FurnitureId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Furniture");
+                });
+
+            modelBuilder.Entity("SelenMebel.Domain.Entities.Category", b =>
+                {
+                    b.Navigation("Furnitures");
+                });
+
+            modelBuilder.Entity("SelenMebel.Domain.Entities.FurnitureCategory", b =>
+                {
+                    b.Navigation("Categories");
                 });
 
             modelBuilder.Entity("SelenMebel.Domain.Entities.FurnitureFeature", b =>

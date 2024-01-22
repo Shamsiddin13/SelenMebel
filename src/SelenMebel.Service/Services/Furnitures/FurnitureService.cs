@@ -138,8 +138,9 @@ public class FurnitureService : IFurnitureService
                 .Where(u => u.UniqueId == uniqueId)
                 .Include(f => f.FurnitureFeature)
                 .AsNoTracking()
-                .FirstOrDefaultAsync() ??
-                    throw new SelenMebelException(404, "Furniture is not found! ");
+                .FirstOrDefaultAsync();
+        if (byUniqueId is null)
+            throw new SelenMebelException(404, "Furniture is not found! ");
 
         return _mapper.Map<FurnitureForResultDto>(byUniqueId);
     }

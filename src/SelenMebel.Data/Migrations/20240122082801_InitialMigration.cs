@@ -68,6 +68,7 @@ namespace SelenMebel.Data.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: true),
+                    Image = table.Column<string>(type: "text", nullable: true),
                     FurnitureId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -91,6 +92,7 @@ namespace SelenMebel.Data.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: true),
+                    Image = table.Column<string>(type: "text", nullable: true),
                     TypeOfFurnitureId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -107,10 +109,60 @@ namespace SelenMebel.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "FurnitureCategories",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    FurnitureId = table.Column<long>(type: "bigint", nullable: false),
+                    CategoryId = table.Column<long>(type: "bigint", nullable: false),
+                    FurnitureCategoryId = table.Column<long>(type: "bigint", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FurnitureCategories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FurnitureCategories_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FurnitureCategories_FurnitureCategories_FurnitureCategoryId",
+                        column: x => x.FurnitureCategoryId,
+                        principalTable: "FurnitureCategories",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_FurnitureCategories_Furnitures_FurnitureId",
+                        column: x => x.FurnitureId,
+                        principalTable: "Furnitures",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Categories_TypeOfFurnitureId",
                 table: "Categories",
                 column: "TypeOfFurnitureId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FurnitureCategories_CategoryId",
+                table: "FurnitureCategories",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FurnitureCategories_FurnitureCategoryId",
+                table: "FurnitureCategories",
+                column: "FurnitureCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FurnitureCategories_FurnitureId",
+                table: "FurnitureCategories",
+                column: "FurnitureId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FurnitureFeatures_FurnitureFeatureId",
@@ -131,6 +183,9 @@ namespace SelenMebel.Data.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "FurnitureCategories");
+
             migrationBuilder.DropTable(
                 name: "Categories");
 

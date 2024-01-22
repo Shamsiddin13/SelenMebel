@@ -7,7 +7,6 @@ namespace SelenMebel.Api.Controllers.Furniture
 {
     public class FurnituresController : BaseController
     {
-        private const string V = "{unique-id}";
         private readonly IFurnitureService _furnitureService;
 
         public FurnituresController(IFurnitureService furnitureService)
@@ -23,11 +22,11 @@ namespace SelenMebel.Api.Controllers.Furniture
         public async Task<IActionResult> GetAllAsync([FromQuery] PaginationParams @params)
             => Ok(await this._furnitureService.RetrieveAllAsync(@params));
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetAsync([FromRoute(Name = "id")] long id)
-            => Ok(await this._furnitureService.RetrieveByIdAsync(id));
+        //[HttpGet("{id}")]
+        //public async Task<IActionResult> GetAsync([FromRoute(Name = "id")] long id)
+        //    => Ok(await this._furnitureService.RetrieveByIdAsync(id));
 
-        [HttpGet(V)]
+        [HttpGet("{unique-id}")]
         public async Task<IActionResult> GetUniqueAsync([FromRoute(Name = "unique-id")] long id)
             => Ok(await this._furnitureService.RetrieveByUniqueIdAsync(id));
 
