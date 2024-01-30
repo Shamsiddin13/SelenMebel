@@ -1,6 +1,5 @@
-﻿using SelenMebel.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore;
+using SelenMebel.Domain.Entities;
 
 namespace SelenMebel.Data.DbContexts;
 
@@ -12,9 +11,15 @@ public class SelenMebelDbContext : DbContext
 
     public DbSet<Category> Categories { get; set; }
     public DbSet<Furniture> Furnitures { get; set; }
-    public DbSet<FurnitureFeature> FurnitureFeatures { get; set; }
     public DbSet<TypeOfFurniture> TypeOfFurnitures { get; set; }
-    public DbSet<FurnitureCategory> FurnitureCategories { get; set; }
+    public DbSet<FurnitureFeature> FurnitureFeatures { get; set; }
+    public DbSet<CartDetail> CartDetails { get; set; }
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<OrderDetail> OrderDetails { get; set; }
+    public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+
+
+
 
     #region
     //protected override void OnModelCreating(ModelBuilder modelBuilder)

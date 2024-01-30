@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using SelenMebel.Domain.Entities;
-using SelenMebel.Service.DTOs.Furnitures;
 using SelenMebel.Service.DTOs.Categories;
-using SelenMebel.Service.DTOs.TypeOfFurniture;
-using SelenMebel.Service.DTOs.FurnitureFeature;
 using SelenMebel.Service.DTOs.FurnitureCategories;
+using SelenMebel.Service.DTOs.FurnitureFeature;
+using SelenMebel.Service.DTOs.Furnitures;
+using SelenMebel.Service.DTOs.TypeOfFurniture;
 
 namespace SelenMebel.Service.Mappers;
 
@@ -21,12 +21,7 @@ public class MapperProfile : Profile
         CreateMap<Furniture, FurnitureForCreationDto>().ReverseMap();
         CreateMap<Furniture, FurnitureForUpdateDto>().ReverseMap();
         CreateMap<Furniture, FurnitureForResultDto>().ReverseMap();
-    
-        // FurnitureCategory
-        CreateMap<FurnitureCategory, FurnitureCategoryForCreationDto>().ReverseMap();
-        CreateMap<FurnitureCategory, FurnitureCategoryForUpdateDto>().ReverseMap();
-        CreateMap<FurnitureCategory, FurnitureCategoryForResultDto>().ReverseMap();
-        
+
         // FurnitureFeature
         CreateMap<FurnitureFeature, FurnitureFeatureForCreationDto>().ReverseMap();
         CreateMap<FurnitureFeature, FurnitureFeatureForUpdateDto>().ReverseMap();
@@ -38,8 +33,8 @@ public class MapperProfile : Profile
         CreateMap<TypeOfFurniture, TypeOfFurnitureForResultDto>().ReverseMap();
 
 
-    
-    
-    
+
+
+
     }
 }

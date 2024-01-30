@@ -1,5 +1,4 @@
-﻿using SelenMebel.Domain.Entities;
-using SelenMebel.Service.DTOs.Categories;
+﻿using SelenMebel.Service.DTOs.Categories;
 using SelenMebel.Service.DTOs.Furnitures;
 
 namespace SelenMebel.Service.DTOs.FurnitureCategories;

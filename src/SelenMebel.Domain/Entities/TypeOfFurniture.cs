@@ -1,11 +1,13 @@
-﻿using SelenMebel.Domain.Commons;
+﻿using SelenMebel.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SelenMebel.Domain.Entities;
 
-public class TypeOfFurniture : Auditable
+[Table("TypeOfFurniture")]
+public class TypeOfFurniture
 {
-    public string Name { get; set; }
-    public string Image { get; set; }
-    public long FurnitureId { get; set; }
-    public Furniture Furniture { get; set; }
+    public long Id { get; set; }
+    public TypeOfSelen TypeOfSelen { get; set; }
+    public string Image { get; set; } = string.Empty;
 }

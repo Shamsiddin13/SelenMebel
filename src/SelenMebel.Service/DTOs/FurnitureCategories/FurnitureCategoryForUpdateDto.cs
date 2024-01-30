@@ -1,6 +1,4 @@
-﻿using SelenMebel.Domain.Entities;
-
-namespace SelenMebel.Service.DTOs.FurnitureCategories;
+﻿namespace SelenMebel.Service.DTOs.FurnitureCategories;
 
 public class FurnitureCategoryForUpdateDto
 {

@@ -1,6 +1,4 @@
-﻿using System.Text.RegularExpressions;
-
-namespace SelenMebel.Api.Models
+﻿namespace SelenMebel.Api.Models
 {
     public class ConfigurationApiUrlName
     {

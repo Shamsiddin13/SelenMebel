@@ -2,6 +2,5 @@
 
 public class FurnitureFeatureForCreationDto
 {
-    public string? Name { get; set; }
-    public string? Value { get; set; }
+    Dictionary<string, object> Features { get; set; }
 }

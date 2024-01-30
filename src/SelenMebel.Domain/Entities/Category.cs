@@ -1,14 +1,19 @@
-﻿using SelenMebel.Domain.Commons;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SelenMebel.Domain.Entities;
 
-public class Category : Auditable
+[Table("Category")]
+public class Category
 {
+    public long Id { get; set; }
+
+    [MaxLength(40)]
     public string Name { get; set; }
+
+    [Required]
     public string Image { get; set; }
 
-    public long TypeOfFurnitureId { get; set; }
-    public TypeOfFurniture TypeOfFurniture { get; set; }
+    public List<Furniture> Furnitures { get; set; }
 
-    public ICollection<FurnitureCategory> Furnitures { get; set; }
 }

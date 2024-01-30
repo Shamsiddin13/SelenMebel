@@ -1,12 +1,17 @@
-﻿using SelenMebel.Domain.Commons;
-using System.Dynamic;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SelenMebel.Domain.Entities;
 
-public class FurnitureFeature : Auditable
+[Table("FurnitureFeature")]
+public class FurnitureFeature
 {
-    public string ?Name { get; set; }
-    public string ?Value { get; set; }
-    
-    public List<FurnitureFeature> FurnitureFeatures { get; set; }
+    public long Id { get; set; }
+
+    public string Name { get; set; } = string.Empty;
+    public string Value { get; set; } = string.Empty;
+
+    public long FurnitureId { get; set; }
+    public Furniture Furniture { get; set; }
+
+    List<FurnitureFeature> FurnitureFeatures { get; set; }
 }

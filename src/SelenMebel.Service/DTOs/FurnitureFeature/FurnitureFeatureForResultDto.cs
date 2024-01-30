@@ -2,7 +2,5 @@
 
 public class FurnitureFeatureForResultDto
 {
-    public long Id { get; set; }
-    public string? Name { get; set; }
-    public string? Value { get; set; }
+    Dictionary<string, object> Features { get; set; }
 }

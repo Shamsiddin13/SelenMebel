@@ -1,17 +1,23 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using SelenMebel.Service.DTOs.CartDetails;
+using SelenMebel.Service.DTOs.ImageOfFurnitures;
+using SelenMebel.Service.DTOs.OrderDetails;
 using System.ComponentModel.DataAnnotations;
 
 namespace SelenMebel.Service.DTOs.Furnitures;
 
 public class FurnitureForCreationDto
 {
+    public long FurnitureFeatureId { get; set; }
+
     [Required]
     public string Name { get; set; }
 
     [Required]
-    public decimal Price { get; set; }
-    
+    public string Price { get; set; }
+
     [Required]
-    public IFormFile Image { get; set; }
-    public long ?FurnitureFeatureId { get; set; }
+    public List<ImageOfFurnitureForCreationDto> ImageOfFurnitures { get; set; }
+
+    public List<OrderDetailForCreationDto> OrderDetail { get; set; }
+    public List<CartDetailForCreationDto> CartDetail { get; set; }
 }
